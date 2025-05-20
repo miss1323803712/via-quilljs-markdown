@@ -2,7 +2,7 @@ import AbstractTag from '../AbstractTag.js'
 import meta from './meta.js'
 
 class Link extends AbstractTag {
-  constructor (quillJS, options = {}) {
+  constructor(quillJS, options = {}) {
     super()
     this.quillJS = quillJS
     this.name = 'li'
@@ -12,7 +12,7 @@ class Link extends AbstractTag {
     this.activeTags = this._getActiveTagsWithoutIgnore(this._meta.applyHtmlTags, options.ignoreTags)
   }
 
-  getAction () {
+  getAction() {
     return {
       name: this.name,
       pattern: this.pattern,
@@ -26,7 +26,8 @@ class Link extends AbstractTag {
         const index = this.quillJS.getIndex(line)
         setTimeout(() => {
           const depth = text.split('. ')[0].split('').filter(e => /\s/gi.test(e)).length
-          const replaceText = text.split('. ').splice(1, 1).join('')
+          const replaceText = text.replace(/^\s*\d+\. /, "")
+
           this.quillJS.insertText(index, replaceText)
           this.quillJS.deleteText(index + replaceText.length - 1, text.length)
           setTimeout(() => {
